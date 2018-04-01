@@ -234,26 +234,15 @@ const removeDragState = function (state) {
 
 const bindFakeDragEvents = function (editor) {
   const state = {};
-  let pageDom, dragStartHandler, dragHandler, dropHandler, dragEndHandler, rootDocument;
+  let dragStartHandler, dragHandler, dropHandler;
 
-  pageDom = DOMUtils.DOM;
-  rootDocument = document;
   dragStartHandler = start(state, editor);
   dragHandler = move(state, editor);
   dropHandler = drop(state, editor);
-  dragEndHandler = stop(state, editor);
 
   editor.on('mousedown', dragStartHandler);
   editor.on('mousemove', dragHandler);
   editor.on('mouseup', dropHandler);
-
-  pageDom.bind(rootDocument, 'mousemove', dragHandler);
-  pageDom.bind(rootDocument, 'mouseup', dragEndHandler);
-
-  editor.on('remove', function () {
-    pageDom.unbind(rootDocument, 'mousemove', dragHandler);
-    pageDom.unbind(rootDocument, 'mouseup', dragEndHandler);
-  });
 };
 
 const blockIeDrop = function (editor) {
